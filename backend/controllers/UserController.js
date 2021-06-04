@@ -8,7 +8,7 @@ var bcrypt = require("bcrypt");
 
 class UserController{
     async index(req, res){
-        var users = await User.findAll();
+        var users = []
         res.json(users);
     }
 
@@ -109,12 +109,12 @@ class UserController{
     }
 
     async login(req, res){
-        var {email, password } = req.body;
-        var user = await User.login(email,password);
-        if(user != undefined){
-            var token = jwt.sign({ id: user.id, cargo: user.cargo }, secret);
+        var {user, password } = req.body;
+        var users = await User.login(user,password);
+        if(users != undefined){
+            var token = jwt.sign({ id: users.id, cargo: users.cargo }, secret);
             res.status(200);
-            res.json({token: token, cargo: user.cargo});
+            res.json({token: token, cargo: users.cargo});
         }
         else {
             res.status(406);

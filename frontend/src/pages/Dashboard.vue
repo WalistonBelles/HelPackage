@@ -133,8 +133,21 @@
   import TaskList from './Dashboard/TaskList';
   import UserTable from './Dashboard/UserTable';
   import config from '@/config';
+  import api from '@/services/api';
 
   export default {
+    created(){
+        var req = {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token')
+            }
+        }
+        api.get("/user",req).then(res => {
+            this.users = res.data;
+        }).catch(err => {
+            this.$router.push({name: 'login'});
+        })
+    },
     components: {
       LineChart,
       BarChart,

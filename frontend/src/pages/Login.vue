@@ -43,16 +43,14 @@
         methods: {
             login(){
                 api.post("/login",{
-                    password: this.password,
-                    email: this.email
+                    user: this.usuario,
+                    password: this.senha
                 }).then(res => {
                     localStorage.setItem('token',res.data.token);
-                    if(res.data.cargo == 5){
+                    if(res.data.cargo >= 3){
                         this.$router.push({name: 'dashboard'});
-                    }else if(res.data.cargo == 4){
-                        this.$router.push({name: 'doctor_dashboard'});
-                    }else {
-                        this.$router.push({name: 'employee_dashboard'});
+                    }else{
+                        this.$router.push({name: 'login'});
                     }
                 }).catch(err => {
                     var msgErro = err.response.data.err;
