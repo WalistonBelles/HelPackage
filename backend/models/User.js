@@ -1,6 +1,5 @@
 var knex = require("../database/connection");
 var bcrypt = require("bcrypt");
-const PasswordToken = require("./PasswordToken");
 var jwt = require("jsonwebtoken");
 
 class User{
@@ -78,11 +77,10 @@ class User{
         }
     }
 
-    async new(nome,senha,nascimento,cpf, telefone, sus_card, rg, email, endereco){
+    async new(pessoa, nome, senha){
         try{
             var hash = await bcrypt.hash(senha, 10);
-            var cargo = 1;
-            await knex.insert({nome, senha: hash, nascimento, cpf, telefone, sus_card, rg, email, cargo, endereco}).table("usuario");
+            await knex.insert({pessoa, nome, senha: hash}).table("cargo");
         }catch(err){
             console.log(err);
         }
@@ -92,11 +90,7 @@ class User{
         try{
             var result = await knex.select("*").from("usuario").where({email: email});
             
-            if(result.length > 0){
-                return true;
-            }else{
-                return false;
-            }
+            return result.length > 0;
 
         }catch(err){
             console.log(err);
