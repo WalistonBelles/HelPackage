@@ -4,6 +4,7 @@ var router = express.Router();
 
 // Controllers
 var UserController = require("../controllers/UserController");
+var ProductController = require("../controllers/ProductController");
 
 // Middlewares
 var AdminAuth = require("../middleware/AdminAuth");
@@ -22,6 +23,7 @@ router.post("/login", UserController.login);
 // Área de Administrador
 router.get("/user", AdminAuth, UserController.index);
 router.post('/user', UserController.create);
+router.post('/product', ProductController.create);
 router.get("/user/:id", UserController.findUser);
 router.get("/user", UserController.index);
 router.put("/user", UserController.edit);

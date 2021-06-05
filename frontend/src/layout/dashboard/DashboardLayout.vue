@@ -6,6 +6,7 @@
         <sidebar-link to="/" :name="$t('Administrar Conta')" icon="tim-icons icon-single-02"/>
         <sidebar-link to="/" :name="$t('Materiais')" icon="tim-icons icon-app"/>
         <ul>
+          <li><sidebar-link to="/" :name="$t('Novo Produto')" icon="tim-icons icon-simple-add"/></li>
           <li><sidebar-link to="/" :name="$t('Classificação')" icon="tim-icons icon-bullet-list-67"/></li>
           <li><sidebar-link to="/" :name="$t('Manutenção')" icon="tim-icons icon-settings-gear-63"/></li>
           <li><sidebar-link to="/" :name="$t('Análise')" icon="tim-icons icon-chart-bar-32"/></li>
