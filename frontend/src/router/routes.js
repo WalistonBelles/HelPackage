@@ -1,8 +1,13 @@
 import DashboardLayout from "@/layout/dashboard/DashboardLayout.vue";
 import NotFound from "@/pages/NotFoundPage.vue";
 
+// Dashboard
 const Dashboard = () => import("@/pages/Dashboard.vue");
 
+// Material
+const NewProduct = () => import("@/pages/Material/NewProduct.vue");
+
+// Free Pages
 const Login = () => import("@/pages/Login.vue");
 
 const routes = [
@@ -20,6 +25,11 @@ const routes = [
         path: "login",
         name: "login",
         component: Login
+      },
+      {
+        path: "material/newProduct",
+        name: "newProduct",
+        component: NewProduct
       },
     ]
   },

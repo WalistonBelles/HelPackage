@@ -21,6 +21,23 @@ class Product{
         }
     }
     
+    async findAll(){
+        try {   
+            var result = await knex.select(["*"]).table("materiais");
+            return result;
+        }catch(err){
+            return undefined;
+        }
+    }
+    async findByName(nome){
+        try {   
+            var result = await knex.select(["*"]).where({nome: nome}).table("materiais");
+            return result[0];
+        }catch(err){
+            return undefined;
+        }
+    }
+
     async findByMaterial(material){
         try{
             var result = await knex.select(["*"]).where({material:material}).table("itens");

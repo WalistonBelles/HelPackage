@@ -23,10 +23,9 @@ router.post("/login", UserController.login);
 // Área de Administrador
 router.get("/user", AdminAuth, UserController.index);
 router.post('/user', UserController.create);
+
+// Material
+router.get('/product', ProductController.index);
 router.post('/product', ProductController.create);
-router.get("/user/:id", UserController.findUser);
-router.get("/user", UserController.index);
-router.put("/user", UserController.edit);
-router.delete("/user/:id", UserController.remove);
 
 module.exports = router;
