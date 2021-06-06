@@ -5,6 +5,7 @@ var router = express.Router();
 // Controllers
 var UserController = require("../controllers/UserController");
 var ProductController = require("../controllers/ProductController");
+var MaterialController = require("../controllers/MaterialController");
 
 // Middlewares
 var AdminAuth = require("../middleware/AdminAuth");
@@ -27,5 +28,6 @@ router.post('/user', UserController.create);
 // Material
 router.get('/product', ProductController.index);
 router.post('/product', ProductController.create);
+router.get('/material', MaterialController.index);
 
 module.exports = router;
