@@ -15,6 +15,23 @@ class Material{
             return undefined;
         }
     }
+    
+    async countAll(){
+        try {
+            var result = await knex('materiais').select(knex.raw('count(*) as count'));
+            return result;
+        }catch(err){
+            return undefined;
+        }
+    }
+    async countGroup(group){
+        try {
+            var result = await knex('materiais').select(knex.raw('count(*) as count')).where({grupo: group});
+            return result;
+        }catch(err){
+            return undefined;
+        }
+    }
 }
 
 module.exports = new Material();

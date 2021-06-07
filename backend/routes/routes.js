@@ -29,5 +29,6 @@ router.post('/user', UserController.create);
 router.get('/product', ProductController.index);
 router.post('/product', ProductController.create);
 router.get('/material', MaterialController.index);
+router.get('/materialAll', MaterialController.countAll);
 
 module.exports = router;
