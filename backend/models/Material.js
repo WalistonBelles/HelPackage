@@ -27,9 +27,46 @@ class Material{
     async countGroup(group){
         try {
             var result = await knex('materiais').select(knex.raw('count(*) as count')).where({grupo: group});
+            if (result.length > 0){
+                return result[0];
+            }
+            return undefined;
+        }catch(err){
+            return undefined;
+        }
+    }
+
+    async findByCodigo(codigo){
+        try {
+            var result = await knex.select('*').where({codigo: codigo}).table('materiais');
             return result;
         }catch(err){
             return undefined;
+        }
+    }
+
+    async updateMaterial(codigo, nome, descricao, grupo){
+        var material = await this.findByCodigo(codigo);
+        if(material != undefined){
+            var editMaterial = {};
+            if(nome != undefined){
+                editMaterial.nome = nome;
+            }
+            if(descricao != undefined){
+                editMaterial.descricao = descricao;
+            }
+            if(grupo != undefined){
+                editMaterial.grupo = grupo;
+            }
+            try{
+                console.log(editMaterial);
+                await knex.update(editMaterial).where({codigo: codigo}).table("materiais");
+                return {status: true}
+            }catch(err){
+                return {status: false,err: err}
+            }
+        }else{
+            return {status: false,err: "O material não existe!"}
         }
     }
 }

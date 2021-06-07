@@ -30,5 +30,7 @@ router.get('/product', ProductController.index);
 router.post('/product', ProductController.create);
 router.get('/material', MaterialController.index);
 router.get('/materialAll', MaterialController.countAll);
+router.post('/material', MaterialController.findByCodigo);
+router.post('/materialUpdate', MaterialController.updateMateriais);
 
 module.exports = router;

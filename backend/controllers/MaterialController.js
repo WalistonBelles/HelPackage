@@ -1,10 +1,10 @@
 var Material = require("../models/Material");
+var Validator = require("./ValidatorController");
 
 class MaterialController{
 
     async index(req, res){
         var Materials = await Material.findAll();
-        console.log(Materials);
         res.json(Materials);
     }
 
@@ -15,15 +15,51 @@ class MaterialController{
         var CountC = await Material.countGroup("C");
         var porcentagem = [];
         var result = [];
-        result.all = await CountAll;
-        result.a = await CountA;
-        result.b = await CountB;
-        result.c = await CountC;
-        porcentagem[0] = result.a[0].count * 100 / result.all[0].count;
-        porcentagem[1] = result.b[0].count * 100 / result.all[0].count;
-        porcentagem[2] = result.c[0].count * 100 / result.all[0].count;
-        console.log(porcentagem);
+        result.all = CountAll[0].count;
+        result.a = CountA.count;
+        result.b = CountB.count;
+        result.c = CountC.count;
+        porcentagem[0] = result.a * 100 / result.all;
+        porcentagem[1] = result.b * 100 / result.all;
+        porcentagem[2] = result.c * 100 / result.all;
         res.json(porcentagem);
+    }
+
+    async findByCodigo(req, res){
+        var {codigo} = req.body;
+        
+        if(!await Validator.ValidaNull(codigo)){
+            res.status(400);
+            res.json({err: "Código inválida!"})
+            return;
+        }
+        var Materials = await Material.findByCodigo(codigo);
+        if (Materials){
+            res.json(Materials);
+            return;
+        }
+        res.status(400);
+        res.json({err: "Código inválida!"})
+        return;
+    }
+
+    async updateMateriais(req, res){
+        var {codigo, nome, descricao, grupo} = req.body;
+        var result = await Material.updateMaterial(codigo, nome, descricao, grupo);
+        console.log(result);
+        if(result != undefined){
+            if(result.status){
+                res.status(200);
+                res.send("Tudo OK!");
+            }else{
+                res.status(406);
+                res.send(result.err)
+            }
+        }
+        else {
+            res.status(406);
+            res.send("Ocorreu um erro no servidor!");
+        }
     }
 }
 
