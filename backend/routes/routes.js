@@ -6,6 +6,7 @@ var router = express.Router();
 var UserController = require("../controllers/UserController");
 var ProductController = require("../controllers/ProductController");
 var MaterialController = require("../controllers/MaterialController");
+var CheckInternetController = require("../controllers/CheckInternetController");
 
 // Middlewares
 var AdminAuth = require("../middleware/AdminAuth");
@@ -20,6 +21,7 @@ router.post('/upload', upload.array('file'), async (req, res) => {
 });
 
 router.post("/login", UserController.login);
+router.get("/checkinternet", CheckInternetController.CheckInternet);
 
 // Área de Administrador
 router.get("/user", AdminAuth, UserController.index);
