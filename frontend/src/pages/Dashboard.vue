@@ -35,6 +35,24 @@
           </div>
         </card>
       </div>
+      <div class="col-lg-12" :class="{'text-right': isRTL}" v-if="set1 == true">
+        <card type="chart">
+          <template slot="header">
+            <h5 class="card-category">{{$t('dashboard.totalShipments')}}</h5>
+            <h3 class="card-title">
+            </h3>
+          </template>
+          <div class="chart-area">
+            <line-chart style="height: 100%"
+                        chart-id="purple-line-chart"
+                        :chart-data="purpleLineChart.chartData"
+                        :gradient-colors="purpleLineChart.gradientColors"
+                        :gradient-stops="purpleLineChart.gradientStops"
+                        :extra-options="purpleLineChart.extraOptions">
+            </line-chart>
+          </div>
+        </card>
+      </div>
     </div>
   </div>
 </template>
@@ -59,6 +77,22 @@
         }).catch(err => {
             this.$router.push({name: 'login'});
         })
+
+        api.get("/operations").then(res => {
+            this.resultOperation = res.data;
+            this.purpleLineChart.chartData.datasets[0].data = [
+              this.resultOperation[0].quantidade,
+              this.resultOperation[1].quantidade,
+              this.resultOperation[2].quantidade,
+              this.resultOperation[3].quantidade,
+              this.resultOperation[4].quantidade,
+              this.resultOperation[5].quantidade,
+              ]
+            this.set1 = true;
+        }).catch(err => {
+            var msgErro = err.response.data.err;
+            this.error = msgErro;
+        })
     },
     components: {
       LineChart,
@@ -71,8 +105,11 @@
         a: 0,
         b: 0,
         c: 0,
+        operation: '2021-06',
+        resultOperation: [],
         users: [],
         set: false,
+        set1: false,
         greenLineChart: {
           extraOptions: chartConfigs.greenChartOptions,
           chartData: {
@@ -113,7 +150,31 @@
           },
           gradientColors: config.colors.primaryGradient,
           gradientStops: [1, 0.4, 0],
-        }
+        },
+        purpleLineChart: {
+          extraOptions: chartConfigs.purpleChartOptions,
+          chartData: {
+            labels: ['JAN', 'FEV', 'MAR', 'ABR', 'MAY', 'JUN'],
+            datasets: [{
+              label: "Vendas",
+              fill: true,
+              borderColor: config.colors.primary,
+              borderWidth: 2,
+              borderDash: [],
+              borderDashOffset: 0.0,
+              pointBackgroundColor: config.colors.primary,
+              pointBorderColor: 'rgba(255,255,255,0)',
+              pointHoverBackgroundColor: config.colors.primary,
+              pointBorderWidth: 20,
+              pointHoverRadius: 4,
+              pointHoverBorderWidth: 15,
+              pointRadius: 4,
+              data: [],
+            }]
+          },
+          gradientColors: config.colors.primaryGradient,
+          gradientStops: [1, 0.2, 0],
+        },
       }
     },
     computed: {
@@ -126,39 +187,6 @@
       bigLineChartCategories() {
         return this.$t('dashboard.chartCategories');
       }
-    },
-    methods: {
-      initBigChart(index) {
-        let chartData = {
-          datasets: [{
-            fill: true,
-            borderColor: config.colors.primary,
-            borderWidth: 2,
-            borderDash: [],
-            borderDashOffset: 0.0,
-            pointBackgroundColor: config.colors.primary,
-            pointBorderColor: 'rgba(255,255,255,0)',
-            pointHoverBackgroundColor: config.colors.primary,
-            pointBorderWidth: 20,
-            pointHoverRadius: 4,
-            pointHoverBorderWidth: 15,
-            pointRadius: 4,
-            data: this.bigLineChart.allData[index]
-          }],
-          labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
-        }
-        this.$refs.bigChart.updateGradients(chartData);
-        this.bigLineChart.chartData = chartData;
-        this.bigLineChart.activeIndex = index;
-      }
-    },
-    mounted() {
-      this.i18n = this.$i18n;
-      if (this.enableRTL) {
-        this.i18n.locale = 'ar';
-        this.$rtl.enableRTL();
-      }
-      this.initBigChart(0);
     },
     beforeDestroy() {
       if (this.$rtl.isRTL) {

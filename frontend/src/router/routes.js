@@ -24,11 +24,6 @@ const routes = [
         component: Dashboard
       },
       {
-        path: "login",
-        name: "login",
-        component: Login
-      },
-      {
         path: "material/newProduct",
         name: "newProduct",
         component: NewProduct
@@ -45,7 +40,14 @@ const routes = [
       },
     ]
   },
-  { path: "*", component: NotFound },
+  {
+    path: "/login",
+    component: Login
+  },
+  { 
+    path: "*", 
+    component: NotFound 
+  },
 ];
 
 export default routes;
