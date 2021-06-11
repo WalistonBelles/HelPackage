@@ -38,5 +38,6 @@ router.post('/materialUpdate', MaterialController.updateMateriais);
 
 // Operations
 router.get('/operations', OperationsController.index);
+router.post('/operations', OperationsController.filterStatus);
 
 module.exports = router;

@@ -12,23 +12,23 @@
                 </div>
             </form>
             <table class="table table-hover" v-if="filteredLists.length > 0">
-            <thead>
-                <tr>
-                    <th scope="col">CÓDIGO</th>
-                    <th scope="col">DESCRIÇÃO</th>
-                    <th scope="col">UNIDADE</th>
-                    <th scope="col">GRUPO</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="list in filteredLists" :key="list.id">
-                    <td>{{list.cod}}</td>
-                    <td>{{list.desc}}</td>
-                    <td>{{list.descricao}}</td>
-                    <td>{{list.grup}}</td>
-                </tr>
-            </tbody>
-        </table>
+                <thead>
+                    <tr>
+                        <th scope="col">CÓDIGO</th>
+                        <th scope="col">DESCRIÇÃO</th>
+                        <th scope="col">UNIDADE</th>
+                        <th scope="col">GRUPO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="list in filteredLists" :key="list.id">
+                        <td>{{list.cod}}</td>
+                        <td>{{list.desc}}</td>
+                        <td>{{list.descricao}}</td>
+                        <td>{{list.grup}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </card>
         
     </div>

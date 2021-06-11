@@ -9,6 +9,9 @@ const NewProduct = () => import("@/pages/Material/NewProduct.vue");
 const Classification = () => import("@/pages/Material/Classification.vue");
 const Manage = () => import("@/pages/Material/Manage.vue");
 
+// Analise
+const Analyze = () => import("@/pages/Analyze/Analyze.vue");
+
 // Free Pages
 const Login = () => import("@/pages/Login.vue");
 
@@ -32,6 +35,16 @@ const routes = [
         path: "material/classification",
         name: "classification",
         component: Classification
+      },
+      {
+        path: "material/manage",
+        name: "manage",
+        component: Manage
+      },
+      {
+        path: "analyze/analyze",
+        name: "analyze",
+        component: Analyze
       },
       {
         path: "material/manage",

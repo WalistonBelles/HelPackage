@@ -19,7 +19,8 @@ class Operations{
             var result = await knex
             .select(["materiais.nome as Nome", "operacoes.data_movimentacao as Data", "itens.valor_unitario as Valor"])
             .sum('operacoes.quantidade AS quantidade')
-            .whereRaw("operacoes.data_movimentacao LIKE '%" + data + "%';")
+            .sum('operacoes.valor AS Valor')
+            .whereRaw("operacoes.operacao = 'Venda' AND operacoes.data_movimentacao LIKE '%" + data + "%';")
             .innerJoin('itens', 'operacoes.id_item', 'itens.item')
             .innerJoin('materiais', 'itens.material', 'materiais.id_material')
             .as('materiais')
@@ -32,30 +33,44 @@ class Operations{
         }
     }
     
-    async countAll(){
+    async findByStatus(periodo, periodo1 = x, periodo2 = x, periodo3 = x, status = 'Tudo', limit = 10){
         try {
-            var result = await knex('materiais').select(knex.raw('count(*) as count'));
-            return result;
-        }catch(err){
-            return undefined;
-        }
-    }
-    async countGroup(group){
-        try {
-            var result = await knex('materiais').select(knex.raw('count(*) as count')).where({grupo: group});
+            var result = await knex
+            .select(["operacoes.id as id", "materiais.nome as Nome", "operacoes.data_movimentacao as Data", "itens.valor_unitario as Valor", "operacoes.quantidade AS quantidade", "operacoes.valor AS Valor"])
+            .whereRaw("operacoes.operacao != '" + status + "' AND (operacoes.data_movimentacao LIKE '%" + periodo + 
+            "%' OR operacoes.data_movimentacao LIKE '%" + periodo1 + 
+            "%' OR operacoes.data_movimentacao LIKE '%" + periodo2 + 
+            "%' OR operacoes.data_movimentacao LIKE '%" + periodo3 + 
+            "%') ORDER BY operacoes.data_movimentacao DESC LIMIT " + limit + "")
+            .innerJoin('itens', 'operacoes.id_item', 'itens.item')
+            .innerJoin('materiais', 'itens.material', 'materiais.id_material')
+            .as('materiais')
+            .as('operacoes')
+            .as('itens')
+            .table("operacoes");
             if (result.length > 0){
-                return result[0];
+                return result;
             }
             return undefined;
         }catch(err){
             return undefined;
         }
     }
-
-    async findByCodigo(codigo){
+    async findByYear(status = 'Tudo', limit = 10){
         try {
-            var result = await knex.select('*').where({codigo: codigo}).table('materiais');
-            return result;
+            var result = await knex
+            .select(["operacoes.id as id", "materiais.nome as Nome", "operacoes.data_movimentacao as Data", "itens.valor_unitario as Valor", "operacoes.quantidade AS quantidade", "operacoes.valor AS Valor"])
+            .whereRaw("operacoes.operacao != '" + status + "' ORDER BY operacoes.data_movimentacao DESC LIMIT " + limit + ";")
+            .innerJoin('itens', 'operacoes.id_item', 'itens.item')
+            .innerJoin('materiais', 'itens.material', 'materiais.id_material')
+            .as('materiais')
+            .as('operacoes')
+            .as('itens')
+            .table("operacoes");
+            if (result.length > 0){
+                return result;
+            }
+            return undefined;
         }catch(err){
             return undefined;
         }
