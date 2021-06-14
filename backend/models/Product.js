@@ -1,4 +1,3 @@
-const { where } = require("../database/connection");
 var knex = require("../database/connection");
 
 class Product{

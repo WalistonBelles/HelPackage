@@ -12,6 +12,9 @@ const Manage = () => import("@/pages/Material/Manage.vue");
 // Analise
 const Analyze = () => import("@/pages/Analyze/Analyze.vue");
 
+// Estoque
+const Stock = () => import("@/pages/Stock/Stock.vue");
+
 // Free Pages
 const Login = () => import("@/pages/Login.vue");
 
@@ -50,6 +53,11 @@ const routes = [
         path: "material/manage",
         name: "manage",
         component: Manage
+      },
+      {
+        path: "stock/stock",
+        name: "stock",
+        component: Stock
       },
     ]
   },

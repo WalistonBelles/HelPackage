@@ -8,6 +8,7 @@ var ProductController = require("../controllers/ProductController");
 var MaterialController = require("../controllers/MaterialController");
 var CheckInternetController = require("../controllers/CheckInternetController");
 var OperationsController = require("../controllers/OperationsController");
+var ItemController = require("../controllers/ItemController");
 
 // Middlewares
 var AdminAuth = require("../middleware/AdminAuth");
@@ -39,5 +40,8 @@ router.post('/materialUpdate', MaterialController.updateMateriais);
 // Operations
 router.get('/operations', OperationsController.index);
 router.post('/operations', OperationsController.filterStatus);
+
+// Item
+router.get('/item', ItemController.index);
 
 module.exports = router;

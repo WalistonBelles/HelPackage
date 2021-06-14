@@ -1,32 +1,77 @@
 <template>
-    <div>
+    <div style="text-align: center;" class="container">
         <h2 style="color: #122c77; text-align: center; font-size:"> Login</h2>    
         <hr>
-        <div class="row">
-            <div class="col-sm">
-            </div>
-            <div class="col-sm">
-                <card>
-                    <form>
-                        <div v-if="error != undefined">
-                            <base-alert type="warning">
-                                <strong>Alerta!</strong> {{error}}!
-                            </base-alert>
-                        </div>
-                        <div class="form-row">
-                            <base-input class="col-md-6" type="text" label="Usuario" placeholder="Usuario" v-model="usuario"/>
-                        </div>
-                        <div class="form-row">
-                            <base-input class="col-md-6" type="password" label="Senha" placeholder="***********" v-model="senha"/>
-                        </div>
-                        <base-button class="animation-on-hover" type="success" @click="login">Acessar</base-button>
-                    </form>
-                </card>
-            </div>
-            <div class="col-sm">
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                </div>
+                <div class="col-sm">
+                    <div class="col-md-6">
+                        <base-button class="animation-on-hover" type="success" @click="loginModalVisible = true">Login</base-button>
+                        <modal :show.sync="loginModalVisible"
+                            body-classes="p-0"
+                            modal-classes="modal-sm"
+                            id="loginModal"
+                            :show-close="true">
+                        <card type="secondary"
+                                header-classes="bg-white pb-5"
+                                body-classes="px-lg-5 py-lg-5"
+                                class="border-0 mb-0">
+                            <template>
+                                <div class="text-muted text-center mb-3">
+                                    <small>Sign in with</small>
+                                </div>
+                                <div class="btn-wrapper text-center">
+                                    <base-button type="default">
+                                        <img slot="icon" src="https://demos.creative-tim.com/argon-design-system/assets/img/icons/common/github.svg">
+                                        Github
+                                    </base-button>
+
+                                    <base-button type="danger">
+                                        <img slot="icon" src="https://demos.creative-tim.com/argon-design-system/assets/img/icons/common/google.svg">
+                                        Google
+                                    </base-button>
+                                </div>
+                            </template>
+                            <template>
+                                <div class="text-center text-muted mb-4">
+                                    <small>Or sign in with credentials</small>
+                                </div>
+                                <form role="form">
+                                    <base-input alternative
+                                                type="text"
+                                                class="mb-3"
+                                                placeholder="Usuario"
+                                                addon-left-icon="ni ni-email-83" v-model="usuario">
+                                    </base-input>
+                                    <base-input alternative
+                                                type="password"
+                                                placeholder="Senha"
+                                                addon-left-icon="ni ni-lock-circle-open" v-model="senha">
+                                    </base-input>
+                                    <base-checkbox>
+                                        Lembrar-me
+                                    </base-checkbox>
+                                    <div v-if="error != undefined">
+                                        <base-alert type="warning">
+                                            <strong>Alerta!</strong> {{error}}!
+                                        </base-alert>
+                                    </div>
+                                    <div class="text-center">
+                                        <base-button type="success" class="my-4" @click="login">Acessar</base-button>
+                                    </div>
+                                </form>
+                            </template>
+                        </card>
+                        </modal>
+                    </div>
+                </div>
+                <div class="col-sm">
+                </div>
             </div>
         </div>
-        
     </div>
 </template>
 
@@ -41,6 +86,7 @@
             return {
                 usuario: '',
                 senha: '',
+                loginModalVisible: false,
                 error: undefined,
             }
         },

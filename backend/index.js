@@ -3,7 +3,6 @@ var express = require("express")
 var app = express()
 var router = require("./routes/routes")
 var cors = require('cors');
-var cache = require('./services/cache.js');
 
 app.use(cors());
  

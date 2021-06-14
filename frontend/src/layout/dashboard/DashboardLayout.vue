@@ -10,6 +10,7 @@
           <li><sidebar-link to="/material/classification" :name="$t('Classificação')" icon="tim-icons icon-bullet-list-67"/></li>
           <li><sidebar-link to="/material/manage" :name="$t('Manutenção')" icon="tim-icons icon-settings-gear-63"/></li>
           <li><sidebar-link to="/analyze/analyze" :name="$t('Análise')" icon="tim-icons icon-chart-bar-32"/></li>
+          <li><sidebar-link to="/stock/stock" :name="$t('Estoque')" icon="tim-icons icon-paper"/></li>
           <li><sidebar-link to="/" :name="$t('Aquisições')" icon="tim-icons icon-coins"/></li>
         </ul>
       </template>
