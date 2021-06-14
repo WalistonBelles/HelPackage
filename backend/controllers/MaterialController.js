@@ -1,4 +1,5 @@
 var Material = require("../models/Material");
+var Synchronize = require("../models/Synchronize");
 var Validator = require("./ValidatorController");
 
 class MaterialController{
@@ -46,11 +47,11 @@ class MaterialController{
     async updateMateriais(req, res){
         var {codigo, nome, descricao, grupo} = req.body;
         var result = await Material.updateMaterial(codigo, nome, descricao, grupo);
-        console.log(result);
         if(result != undefined){
             if(result.status){
                 res.status(200);
                 res.send("Tudo OK!");
+                await Synchronize.updateMateriais(codigo, nome, descricao, grupo);
             }else{
                 res.status(406);
                 res.send(result.err)

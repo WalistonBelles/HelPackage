@@ -59,7 +59,6 @@ class Material{
                 editMaterial.grupo = grupo;
             }
             try{
-                console.log(editMaterial);
                 await knex.update(editMaterial).where({codigo: codigo}).table("materiais");
                 return {status: true}
             }catch(err){
